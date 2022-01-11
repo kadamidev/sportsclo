@@ -1,11 +1,23 @@
-export const CarouselData = [
+export const CarouselDataPortrait = [
   {
-    image: "/promo1.png",
+    image: "/promo_portrait1.png",
   },
   {
-    image: "/promo2.png",
+    image: "/promo_portrait2.png",
   },
   {
-    image: "/promo3.png",
+    image: "/promo_portrait3.png",
+  },
+]
+
+export const CarouselDataLandscape = [
+  {
+    image: "/promo_landscape1.png",
+  },
+  {
+    image: "/promo_landscape2.png",
+  },
+  {
+    image: "/promo_landscape3.png",
   },
 ]

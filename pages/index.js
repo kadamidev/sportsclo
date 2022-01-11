@@ -1,10 +1,15 @@
 import Head from "next/head"
 import styles from "../styles/Home.module.scss"
 import Image from "next/image"
-import { CarouselData } from "../components/Carousel/CarouselData"
+import {
+  CarouselDataLandscape,
+  CarouselDataPortrait,
+} from "../components/Carousel/CarouselData"
 import Carousel from "../components/Carousel/Carousel"
+import { useMediaQuery } from "../utils/useMediaQuery"
 
 export default function Home() {
+  const portraitMode = useMediaQuery("(max-width: 768px)")
   return (
     <div className={styles.container}>
       <Head>
@@ -17,7 +22,9 @@ export default function Home() {
       </div>
 
       <section className={styles.carouselWrapper}>
-        <Carousel slides={CarouselData} />
+        <Carousel
+          slides={portraitMode ? CarouselDataPortrait : CarouselDataLandscape}
+        />
       </section>
 
       <button className={styles.shopBtn}>SHOP NOW</button>

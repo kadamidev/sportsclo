@@ -73,3 +73,23 @@
     }
   }
 }
+
+@media screen and (min-width: 768px) {
+  .carousel {
+    .slideContainer {
+      .slideActive {
+        width: 80vw;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1080px) {
+  .carousel {
+    .slideContainer {
+      .slideActive {
+        width: 1080px;
+      }
+    }
+  }
+}

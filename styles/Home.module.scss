@@ -34,3 +34,21 @@
     }
   }
 }
+
+@media screen and (min-width: 768px) {
+  .container {
+    width: 80vw;
+    margin-left: 10vw;
+
+    .shopBtn {
+      letter-spacing: 0.5em;
+    }
+  }
+}
+
+@media screen and (min-width: 1080px) {
+  .container {
+    width: 1080px;
+    margin-left: calc((100vw - 1080px) / 2);
+  }
+}
