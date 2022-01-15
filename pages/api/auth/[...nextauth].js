@@ -1,6 +1,8 @@
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import dbConnect from "../../../utils/dbConnect"
+import User from "../../../models/User"
+import bcrypt from "bcryptjs"
 
 export default NextAuth({
   // Configure one or more authentication providers
@@ -17,14 +19,12 @@ export default NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        // Add logic here to look up the user from the credentials supplied
-        let user = null
-        if (req.username === "test" && req.password === "testing") {
-          user = { id: 1, username: "test", password: "testing" }
-        }
+        await dbConnect()
 
-        if (user) {
-          // Any object returned will be saved in `user` property of the JWT
+        const user = await User.findOne({ username: credentials.username })
+
+        if (bcrypt.compareSync(credentials.password, user.password)) {
+          console.log("success")
           return user
         } else {
           // If you return null then an error will be displayed advising the user to check their details.

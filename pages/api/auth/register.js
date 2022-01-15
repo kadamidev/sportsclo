@@ -1,7 +1,6 @@
 import dbConnect from "../../../utils/dbConnect"
-const User = require("../../../models/User")
-
-const bcrypt = require("bcryptjs")
+import User from "../../../models/User"
+import bcrypt from "bcryptjs"
 
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
