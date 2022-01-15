@@ -1,5 +1,6 @@
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
+import dbConnect from "../../../utils/dbConnect"
 
 export default NextAuth({
   // Configure one or more authentication providers
@@ -17,7 +18,10 @@ export default NextAuth({
       },
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
-        const user = { id: 1, name: "J Smith", email: "jsmith@example.com" }
+        let user = null
+        if (req.username === "test" && req.password === "testing") {
+          user = { id: 1, username: "test", password: "testing" }
+        }
 
         if (user) {
           // Any object returned will be saved in `user` property of the JWT
@@ -31,4 +35,25 @@ export default NextAuth({
       },
     }),
   ],
+  callbacks: {
+    jwt: async (token, user) => {
+      if (user) {
+        token.id = user.id
+      }
+
+      return token
+    },
+    session: ({ session, token }) => {
+      if (token) {
+        session.id = token.id
+      }
+
+      return session
+    },
+  },
+  secret: "test",
+  jwt: {
+    secret: "test",
+    encryption: true,
+  },
 })

@@ -5,11 +5,15 @@ import {
   increment,
   incrementByAmount,
 } from "../redux/reducers/counterSlice"
+import { useSession } from "next-auth/react"
 
 export default function Shop() {
+  const { data: session } = useSession()
+
   const count = useSelector((state) => state.counter.value)
   const dispatch = useDispatch()
 
+  console.log(session)
   return (
     <div>
       hello wordl
