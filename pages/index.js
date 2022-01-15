@@ -1,6 +1,7 @@
 import Head from "next/head"
 import styles from "../styles/Home.module.scss"
 import Image from "next/image"
+import Link from "next/link"
 import {
   CarouselDataLandscape,
   CarouselDataPortrait,
@@ -26,8 +27,9 @@ export default function Home() {
           slides={portraitMode ? CarouselDataPortrait : CarouselDataLandscape}
         />
       </section>
-
-      <button className={styles.shopBtn}>SHOP NOW</button>
+      <Link href="/shop">
+        <button className={styles.shopBtn}>SHOP NOW</button>
+      </Link>
     </div>
   )
 }

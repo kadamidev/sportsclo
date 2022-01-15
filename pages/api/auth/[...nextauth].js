@@ -44,6 +44,7 @@ export default NextAuth({
       return token
     },
     session: ({ session, token }) => {
+      console.log(session)
       if (token) {
         session.id = token.id
       }
@@ -51,9 +52,13 @@ export default NextAuth({
       return session
     },
   },
-  secret: "test",
+  secret: process.env.AUTH_SECRET,
   jwt: {
-    secret: "test",
+    secret: process.env.JWT_SECRET,
     encryption: true,
+  },
+  session: {
+    jwt: true,
+    maxAge: 30 * 24 * 60 * 60,
   },
 })
