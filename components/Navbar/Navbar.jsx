@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import styles from "./Navbar.module.scss"
-import { items } from "./data"
+import { items } from "../../utils/data"
 import useDebounce from "../../utils/useDebounce"
 import Link from "next/link"
 import { signOut, useSession } from "next-auth/react"
@@ -169,7 +169,9 @@ export default function Navbar() {
             )}
           </div>
           {session ? (
-            <div className={styles.userIcon}>{session.username}</div>
+            <div className={styles.userIcon}>
+              {session.user.username[0].toUpperCase()}
+            </div>
           ) : (
             <div
               className={

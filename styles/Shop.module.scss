@@ -1,0 +1,20 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  // display: block;
+  // margin-top: 100px;
+  margin-top: 100px; //80px nav mobile
+
+  .navbarWrapper {
+    position: fixed;
+    top: 0;
+    z-index: 100;
+  }
+
+  .itemGridWrapper {
+    margin-top: 20px;
+    // margin-top: max(11vw, 110px);
+    // display: block;
+  }
+}
