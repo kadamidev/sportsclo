@@ -310,3 +310,31 @@
     }
   }
 }
+
+@media screen and (min-width: 1080px) {
+  .navContainer {
+    width: 100vw;
+    padding-left: calc((100vw - 1080px) / 2);
+    padding-right: calc((100vw - 1080px) / 2);
+
+    .logoContainer {
+      margin-left: 0;
+    }
+
+    .right {
+      margin-right: 0;
+
+      .cartWrapper {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .navContainer {
+    width: 100vw;
+    padding-left: calc((100vw - 1440px) / 2);
+    padding-right: calc((100vw - 1440px) / 2);
+  }
+}
