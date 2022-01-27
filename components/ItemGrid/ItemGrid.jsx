@@ -1,9 +1,12 @@
 import Image from "next/image"
 import styles from "./ItemGrid.module.scss"
-import { items } from "../../utils/data"
 import React, { useState, useRef } from "react"
+import Link from "next/link"
+import { useSelector } from "react-redux"
 
 export default function ItemGrid() {
+  const items = useSelector((state) => state.items.value)
+
   const filtersRef = useRef()
   const [filter, setFilter] = useState(0)
   const [showFilterSelection, setShowFilterSelection] = useState(false)
@@ -49,22 +52,24 @@ export default function ItemGrid() {
       <ul className={styles.itemList}>
         {items.map((item, idx) => {
           return (
-            <li key={idx} className={styles.gridItem}>
-              <div className={styles.imageWrapper}>
-                <Image
-                  src={`/items/${item.image.url}`}
-                  alt={item.image.alt}
-                  width={200}
-                  height={200}
-                  layout="responsive"
-                  objectFit="cover"
-                />
-              </div>
-              <div className={styles.itemDetails}>
-                <span className={styles.itemName}>{item.name}</span>
-                <span className={styles.itemPrice}>&#36;{item.price}.00</span>
-              </div>
-            </li>
+            <Link href={`/shop/${item._id}`} key={item._id}>
+              <li key={idx} className={styles.gridItem}>
+                <div className={styles.imageWrapper}>
+                  <Image
+                    src={`/items/${item.image.url}`}
+                    alt={item.image.alt}
+                    width={200}
+                    height={200}
+                    layout="responsive"
+                    objectFit="cover"
+                  />
+                </div>
+                <div className={styles.itemDetails}>
+                  <span className={styles.itemName}>{item.name}</span>
+                  <span className={styles.itemPrice}>&#36;{item.price}.00</span>
+                </div>
+              </li>
+            </Link>
           )
         })}
         <li className={styles.ghostElm}></li>

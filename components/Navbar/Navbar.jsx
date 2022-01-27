@@ -1,19 +1,20 @@
 import React, { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import styles from "./Navbar.module.scss"
-import { items } from "../../utils/data"
 import useDebounce from "../../utils/useDebounce"
 import Link from "next/link"
 import { signOut, useSession } from "next-auth/react"
 import { useRouter } from "next/router"
+import { useSelector } from "react-redux"
 
 export default function Navbar() {
+  const items = useSelector((state) => state.items.value)
+
   const { data: session } = useSession()
   const router = useRouter()
   if (session) {
     console.log(session.user)
   }
-  console.log(session)
   const [searchQuery, setSearchQuery] = useState("")
   const debouncedSearchQuery = useDebounce(searchQuery, 250)
   const [filteredItems, setFilteredItems] = useState([])

@@ -1,0 +1,91 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  justify-content: center;
+  margin-top: 100px; //80px nav mobile
+  --width: auto;
+  color: #404040;
+
+  .navbarWrapper {
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    left: 0;
+  }
+
+  .heroContainer {
+    width: 90%;
+    margin-left: 5%;
+
+    .itemContainer {
+      .imageWrapper {
+        width: var(--width);
+        display: block;
+        background: #e9e9e9;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+        margin-bottom: 20px;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 1.5em;
+        line-height: 1.2em;
+      }
+
+      h2 {
+        font-size: 1.1em;
+      }
+
+      .optionsContainer {
+        display: flex;
+        align-items: center;
+
+        h2 {
+          margin-right: 0.6em;
+        }
+
+        ul {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          gap: 5px;
+
+          li {
+            border: 1px solid #404040;
+            width: fit-content;
+            padding: 0 0.3em;
+            font-size: 0.9em;
+            height: fit-content;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    margin-top: min(120px, calc(10vw + 20px));
+  }
+}
+
+@media screen and (min-width: 1080px) {
+  .container {
+    width: 1080px;
+    // .itemGridWrapper {
+    //   width: 1080px;
+    //   margin-left: calc((100vw - 1080px) / 2);
+    // }
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .container {
+    // .itemGridWrapper {
+    //   width: 1440px;
+    //   margin-left: calc((100vw - 1440px) / 2);
+    // }
+  }
+}

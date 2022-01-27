@@ -1,4 +1,4 @@
-export const items = [
+const items = [
   // {
   //   name: "item",
   //   image: {
@@ -540,3 +540,5 @@ export const items = [
     categories: [],
   },
 ]
+
+module.exports = items
