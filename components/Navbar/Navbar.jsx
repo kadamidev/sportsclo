@@ -170,7 +170,14 @@ export default function Navbar() {
             )}
           </div>
           {session ? (
-            <div className={styles.userIcon}>
+            <div
+              className={styles.userIcon}
+              onClick={() => {
+                setShowAuthBtns(!showAuthBtns)
+                setShowSearchBar(false)
+                setShowCart(false)
+              }}
+            >
               {session.user.username[0].toUpperCase()}
             </div>
           ) : (

@@ -6,6 +6,7 @@
   margin-top: 100px; //80px nav mobile
   --width: auto;
   color: #404040;
+  display: flex;
 
   .navbarWrapper {
     position: fixed;
@@ -16,134 +17,141 @@
 
   .heroContainer {
     width: 90%;
-    margin-left: 5%;
 
     .itemContainer {
       .imageWrapper {
         width: var(--width);
         display: block;
-        background: #e9e9e9;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
         margin-bottom: 20px;
+        height: fit-content;
       }
-
-      h1 {
-        margin: 0;
-        font-size: 1.5em;
-        line-height: 1.2em;
-      }
-
-      h2 {
-        font-size: 1.1em;
-        margin: 0;
-        margin: 0.3em 0;
-      }
-
-      .optionsContainer {
-        display: flex;
-        align-items: center;
+      .details {
+        h1 {
+          margin: 0;
+          font-size: 1.5em;
+          line-height: 1.2em;
+        }
 
         h2 {
-          margin-right: 0.6em;
-        }
-
-        ul {
-          list-style: none;
+          font-size: 1.1em;
           margin: 0;
-          padding: 0;
-          display: flex;
-          gap: 5px;
-
-          li {
-            border: 1px solid #404040;
-            width: fit-content;
-            padding: 0 0.3em;
-            font-size: 0.9em;
-            height: fit-content;
-            cursor: pointer;
-          }
-          .active {
-            color: white;
-            background: var(--primary-purple);
-            border-color: var(--primary-purple);
-          }
+          margin: 0.3em 0;
         }
-      }
 
-      .cartOptions {
-        .quantityContainer {
-          margin-top: 7px;
+        .optionsContainer {
           display: flex;
           align-items: center;
+
           h2 {
             margin-right: 0.6em;
           }
 
-          .quantityWrapper {
-            position: relative;
-            width: 60px;
-            height: 35px;
-            margin-bottom: 12px;
-            .quantityInput {
-              width: 60px;
-              height: 35px;
-              font-weight: bold;
-              font-family: "poppins";
-              border: 2px solid #404040;
-              color: #404040;
-              margin-right: 5px;
-              font-size: 1em;
-              padding-left: 5px;
+          ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 5px;
+
+            li {
+              border: 1px solid #404040;
+              width: fit-content;
+              padding: 0 0.3em;
+              font-size: 0.9em;
+              height: fit-content;
+              cursor: pointer;
             }
-
-            button {
-              background: none;
-              font-weight: bold;
-              height: 15.5px;
-              width: 17.5px;
-              position: absolute;
-              padding: 0;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              border: none;
-              border-left: 2px solid #404040;
-              right: 2px;
-              color: #404040;
-
-              &.quantityPlus {
-                top: 2px;
-                border-bottom: 1px solid #404040;
-              }
-              &.quantityMinus {
-                border-top: 1px solid #404040;
-                bottom: 2px;
-              }
-
-              &:hover {
-                background: var(--primary-purple);
-                color: white;
-              }
+            .active {
+              color: white;
+              background: var(--primary-purple);
+              border-color: var(--primary-purple);
             }
           }
         }
-        .buttonsContainer {
-          button {
-            margin-right: 5px;
-            border: 2px solid #404040;
-            height: 35px;
-            font-family: "poppins";
-            font-weight: bold;
-            color: #404040;
-            background: white;
-            cursor: pointer;
-            font-size: 1em;
-            padding: 0 0.4em;
 
-            &:hover {
-              background: var(--primary-purple);
-              border: 2px solid var(--primary-purple);
-              color: white;
+        .cartOptions {
+          .quantityContainer {
+            margin-top: 7px;
+            display: flex;
+            align-items: center;
+            h2 {
+              margin-right: 0.6em;
+            }
+
+            .quantityWrapper {
+              position: relative;
+              width: 60px;
+              height: 35px;
+              margin-bottom: 12px;
+              .quantityInput {
+                width: 60px;
+                height: 35px;
+                font-weight: bold;
+                font-family: "poppins";
+                border: 2px solid #404040;
+                color: #404040;
+                margin-right: 5px;
+                font-size: 1em;
+                padding-left: 5px;
+                -webkit-appearance: none;
+                -moz-appearance: textfield;
+                padding-right: 18px;
+
+                &:focus {
+                  outline: none !important;
+                }
+              }
+
+              button {
+                background: none;
+                font-weight: bold;
+                height: 15.5px;
+                width: 17.5px;
+                position: absolute;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border: none;
+                border-left: 2px solid #404040;
+                right: 2px;
+                color: #404040;
+
+                &.quantityPlus {
+                  top: 2px;
+                  border-bottom: 1px solid #404040;
+                }
+                &.quantityMinus {
+                  border-top: 1px solid #404040;
+                  bottom: 2px;
+                }
+
+                &:hover {
+                  background: var(--primary-purple);
+                  color: white;
+                }
+              }
+            }
+          }
+          .buttonsContainer {
+            button {
+              margin-right: 5px;
+              border: 2px solid #404040;
+              height: 35px;
+              font-family: "poppins";
+              font-weight: bold;
+              color: #404040;
+              background: white;
+              cursor: pointer;
+              font-size: 1em;
+              padding: 0 0.4em;
+
+              &:hover {
+                background: var(--primary-purple);
+                border: 2px solid var(--primary-purple);
+                color: white;
+              }
             }
           }
         }
@@ -163,24 +171,69 @@
 @media screen and (min-width: 768px) {
   .container {
     margin-top: min(120px, calc(10vw + 20px));
+    --width: 50%;
+
+    .heroContainer {
+      .itemContainer {
+        .imageWrapper {
+          margin-right: 20px;
+          margin-bottom: 0px;
+        }
+
+        display: flex;
+        height: fit-content;
+
+        .details {
+          display: flex;
+          flex-direction: column;
+
+          p {
+            margin-bottom: auto;
+          }
+
+          .cartOptions {
+            display: flex;
+            align-items: flex-end;
+            margin-top: 7px;
+            .quantityContainer {
+              .quantityWrapper {
+                margin-bottom: 0px;
+              }
+              margin-top: 0px;
+              margin-right: 5px;
+              align-self: flex-end;
+              h2 {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
 
 @media screen and (min-width: 1080px) {
   .container {
-    width: 1080px;
-    // .itemGridWrapper {
-    //   width: 1080px;
-    //   margin-left: calc((100vw - 1080px) / 2);
-    // }
+    .heroContainer {
+      width: 1080px;
+      font-size: 1.2em;
+      .itemContainer {
+        .details {
+          .cartOptions {
+            // font-size: 1.2em;
+          }
+        }
+      }
+    }
   }
 }
 
 @media screen and (min-width: 1440px) {
   .container {
-    // .itemGridWrapper {
-    //   width: 1440px;
-    //   margin-left: calc((100vw - 1440px) / 2);
-    // }
+    .heroContainer {
+      // width: 1440px;
+      // border: 1px solid black;
+    }
   }
 }

@@ -49,7 +49,11 @@ export default function Item({ item }) {
     setActiveOptions(changedOptions)
   }
 
-  function handleQuantityChange(e) {
+  useEffect(() => {
+    if (quantity < 1 || isNaN(quantity)) setQuantity(1)
+  }, [quantity, setQuantity])
+
+  const handleQuantityChange = (e) => {
     if (isNaN(e.target.value)) return
     setQuantity(parseInt(e.target.value))
   }
@@ -72,69 +76,78 @@ export default function Item({ item }) {
               objectFit="cover"
             />
           </div>
-          <h1>{item.name.toUpperCase()}</h1>
-          <h1>&#36;{item.price}.00</h1>
 
-          <p>{item.description}</p>
+          <div className={styles.details}>
+            <h1>{item.name.toUpperCase()}</h1>
+            <h1>&#36;{item.price}.00</h1>
 
-          {item.options.length > 0 &&
-            item.options.map((option, idx) => {
-              return (
-                <div key={idx} className={styles.optionsContainer}>
-                  <h2>{Object.keys(option)}</h2>
-                  <ul>
-                    {Object.values(option)[0].map((selector, selection_idx) => {
-                      return (
-                        <li
-                          className={
-                            activeOptions[Object.keys(option)] === selection_idx
-                              ? styles.active
-                              : null
-                          }
-                          key={selection_idx}
-                          onClick={() => {
-                            handleOptionClick(
-                              Object.keys(option),
-                              selection_idx
-                            )
-                          }}
-                        >
-                          {selector}
-                        </li>
-                      )
-                    })}
-                  </ul>
+            <p>{item.description}</p>
+
+            {item.options.length > 0 &&
+              item.options.map((option, idx) => {
+                return (
+                  <div key={idx} className={styles.optionsContainer}>
+                    <h2>{Object.keys(option)}</h2>
+                    <ul>
+                      {Object.values(option)[0].map(
+                        (selector, selection_idx) => {
+                          return (
+                            <li
+                              className={
+                                activeOptions[Object.keys(option)] ===
+                                selection_idx
+                                  ? styles.active
+                                  : null
+                              }
+                              key={selection_idx}
+                              onClick={() => {
+                                handleOptionClick(
+                                  Object.keys(option),
+                                  selection_idx
+                                )
+                              }}
+                            >
+                              {selector}
+                            </li>
+                          )
+                        }
+                      )}
+                    </ul>
+                  </div>
+                )
+              })}
+
+            <div className={styles.cartOptions}>
+              <div className={styles.quantityContainer}>
+                <h2>Quantity</h2>
+                <div className={styles.quantityWrapper}>
+                  <input
+                    className={styles.quantityInput}
+                    value={quantity}
+                    onChange={handleQuantityChange}
+                  />
+                  <button
+                    className={styles.quantityPlus}
+                    onClick={() => setQuantity(quantity + 1)}
+                  >
+                    +
+                  </button>
+                  <button
+                    className={styles.quantityMinus}
+                    onClick={() => {
+                      if (quantity === 1) return
+                      setQuantity(quantity - 1)
+                    }}
+                  >
+                    -
+                  </button>
                 </div>
-              )
-            })}
-
-          <div className={styles.cartOptions}>
-            <div className={styles.quantityContainer}>
-              <h2>Quantity</h2>
-              <div className={styles.quantityWrapper}>
-                <input
-                  className={styles.quantityInput}
-                  value={quantity}
-                  onChange={handleQuantityChange}
-                />
-                <button
-                  className={styles.quantityPlus}
-                  onClick={() => setQuantity(quantity + 1)}
-                >
-                  +
-                </button>
-                <button
-                  className={styles.quantityMinus}
-                  onClick={() => setQuantity(quantity - 1)}
-                >
-                  -
-                </button>
               </div>
-            </div>
 
-            <div className={styles.buttonsContainer}>
-              <button>ADD TO CART</button>
-              <button>REMOVE FROM CART</button>
+              <div className={styles.buttonsContainer}>
+                <button>ADD TO CART</button>
+                <button>REMOVE FROM CART</button>
+              </div>
             </div>
           </div>
         </div>
