@@ -17,6 +17,15 @@
 
   .heroContainer {
     width: 90%;
+    .backLink {
+      text-decoration: underline;
+      color: #999999;
+      margin-bottom: 10px;
+      display: block;
+      font-size: 0.9em;
+      width: fit-content;
+      cursor: pointer;
+    }
 
     .itemContainer {
       .imageWrapper {

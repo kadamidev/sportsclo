@@ -1,11 +1,13 @@
 import Image from "next/image"
 import styles from "./ItemGrid.module.scss"
-import React, { useState, useRef } from "react"
+import React, { useState, useRef, useEffect } from "react"
 import Link from "next/link"
 import { useSelector } from "react-redux"
+import { useRouter } from "next/router"
 
 export default function ItemGrid() {
   const items = useSelector((state) => state.items.value)
+  const router = useRouter()
 
   const filtersRef = useRef()
   const [filter, setFilter] = useState(0)
@@ -16,6 +18,26 @@ export default function ItemGrid() {
     "price: high-to-low",
     "newest-to-oldest",
   ]
+
+  const [itemMarkerId, setItemMarkerId] = useState(null)
+
+  const restorationref = useRef(null)
+
+  useEffect(() => {
+    const storedId = sessionStorage.getItem("scroll-pos-item-id-marker")
+    if (storedId) {
+      setItemMarkerId(storedId.toString())
+    }
+
+    sessionStorage.removeItem("scroll-pos-item-id-marker")
+  }, [itemMarkerId, setItemMarkerId])
+
+  useEffect(() => {
+    if (!restorationref.current) {
+      return
+    }
+    restorationref.current.scrollIntoView({ behavior: "auto", block: "center" })
+  })
 
   return (
     <section className={styles.itemGridContainer}>
@@ -52,24 +74,29 @@ export default function ItemGrid() {
       <ul className={styles.itemList}>
         {items.map((item, idx) => {
           return (
-            <Link href={`/shop/${item._id}`} key={item._id}>
-              <li key={idx} className={styles.gridItem}>
-                <div className={styles.imageWrapper}>
-                  <Image
-                    src={`/items/${item.image.url}`}
-                    alt={item.image.alt}
-                    width={200}
-                    height={200}
-                    layout="responsive"
-                    objectFit="cover"
-                  />
-                </div>
-                <div className={styles.itemDetails}>
-                  <span className={styles.itemName}>{item.name}</span>
-                  <span className={styles.itemPrice}>&#36;{item.price}.00</span>
-                </div>
-              </li>
-            </Link>
+            <li
+              key={item._id}
+              className={styles.gridItem}
+              ref={item._id == itemMarkerId ? restorationref : null}
+              onClick={() => {
+                router.push(`/shop/${item._id}`)
+              }}
+            >
+              <div className={styles.imageWrapper}>
+                <Image
+                  src={`/items/${item.image.url}`}
+                  alt={item.image.alt}
+                  width={200}
+                  height={200}
+                  layout="responsive"
+                  objectFit="cover"
+                />
+              </div>
+              <div className={styles.itemDetails}>
+                <span className={styles.itemName}>{item.name}</span>
+                <span className={styles.itemPrice}>&#36;{item.price}.00</span>
+              </div>
+            </li>
           )
         })}
         <li className={styles.ghostElm}></li>
@@ -77,3 +104,5 @@ export default function ItemGrid() {
     </section>
   )
 }
+
+// export default forwardRef(NameInput);

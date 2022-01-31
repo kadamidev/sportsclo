@@ -3,6 +3,8 @@ import styles from "../../styles/Item.module.scss"
 import Navbar from "../../components/Navbar/Navbar"
 import Image from "next/image"
 import RecommendedGrid from "../../components/RecommendedGrid/RecommendedGrid"
+import Link from "next/link"
+import { useRouter } from "next/router"
 
 export const getStaticPaths = async () => {
   const res = await fetch("http://localhost:3000/api/items/")
@@ -32,6 +34,15 @@ export const getStaticProps = async (context) => {
 export default function Item({ item }) {
   const [activeOptions, setActiveOptions] = useState({})
   const [quantity, setQuantity] = useState(1)
+  const router = useRouter()
+
+  //persist scroll pos only if the user returns to prev page
+  useEffect(() => {
+    router.beforePopState(() => {
+      sessionStorage.setItem("scroll-pos-item-id-marker", item._id)
+      return true
+    })
+  }, [])
 
   //set initial active options
   useEffect(() => {
@@ -65,6 +76,10 @@ export default function Item({ item }) {
       </div>
 
       <section className={styles.heroContainer}>
+        <span className={styles.backLink} onClick={() => router.back()}>
+          &#8617; return to catalog
+        </span>
+
         <div className={styles.itemContainer}>
           <div className={styles.imageWrapper}>
             <Image
