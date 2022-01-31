@@ -1,6 +1,6 @@
 import Image from "next/image"
 import styles from "./ItemGrid.module.scss"
-import React, { useState, useRef, useEffect } from "react"
+import React, { useState, useRef } from "react"
 import Link from "next/link"
 import { useSelector } from "react-redux"
 import { useRouter } from "next/router"
@@ -20,24 +20,6 @@ export default function ItemGrid() {
   ]
 
   const [itemMarkerId, setItemMarkerId] = useState(null)
-
-  const restorationref = useRef(null)
-
-  useEffect(() => {
-    const storedId = sessionStorage.getItem("scroll-pos-item-id-marker")
-    if (storedId) {
-      setItemMarkerId(storedId.toString())
-    }
-
-    sessionStorage.removeItem("scroll-pos-item-id-marker")
-  }, [itemMarkerId, setItemMarkerId])
-
-  useEffect(() => {
-    if (!restorationref.current) {
-      return
-    }
-    restorationref.current.scrollIntoView({ behavior: "auto", block: "center" })
-  })
 
   return (
     <section className={styles.itemGridContainer}>
@@ -77,7 +59,6 @@ export default function ItemGrid() {
             <li
               key={item._id}
               className={styles.gridItem}
-              ref={item._id == itemMarkerId ? restorationref : null}
               onClick={() => {
                 router.push(`/shop/${item._id}`)
               }}
@@ -104,5 +85,3 @@ export default function ItemGrid() {
     </section>
   )
 }
-
-// export default forwardRef(NameInput);

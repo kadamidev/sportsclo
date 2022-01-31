@@ -36,14 +36,6 @@ export default function Item({ item }) {
   const [quantity, setQuantity] = useState(1)
   const router = useRouter()
 
-  //persist scroll pos only if the user returns to prev page
-  useEffect(() => {
-    router.beforePopState(() => {
-      sessionStorage.setItem("scroll-pos-item-id-marker", item._id)
-      return true
-    })
-  }, [])
-
   //set initial active options
   useEffect(() => {
     if (item.options.length < 1) return
