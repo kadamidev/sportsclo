@@ -15,6 +15,10 @@
     left: 0;
   }
 
+  .cartWrapper {
+    z-index: 1000;
+  }
+
   .itemGridWrapper {
     display: flex;
     justify-content: center;
