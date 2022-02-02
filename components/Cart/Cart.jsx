@@ -1,5 +1,6 @@
-import React from "react"
+import React, { useState } from "react"
 import styles from "./Cart.module.scss"
+import { useSelector } from "react-redux"
 
 export default function Cart() {
   return (

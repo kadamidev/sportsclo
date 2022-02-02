@@ -1,19 +1,16 @@
 .cartContainer {
   background: white;
   width: 70%;
-  padding-top: 85px;
+  // padding-top: 85px;
+  padding: 5px 10px 0px;
   min-width: 250px;
   height: 100%;
   position: fixed;
-  right: 0px;
-  bottom: 0;
-  z-index: 99;
-  box-shadow: -4px 2px 4px rgba(0, 0, 0, 0.15);
+  box-shadow: -4px 3px 4px rgba(0, 0, 0, 0.15);
 
   .columnHeaders {
     display: flex;
     justify-content: space-between;
-    margin: 0 10px;
     font-weight: bold;
     font-size: 0.9em;
     color: var(--main-grey);

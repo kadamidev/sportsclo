@@ -19,8 +19,6 @@ export default function ItemGrid() {
     "newest-to-oldest",
   ]
 
-  const [itemMarkerId, setItemMarkerId] = useState(null)
-
   return (
     <section className={styles.itemGridContainer}>
       <div className={styles.top}>

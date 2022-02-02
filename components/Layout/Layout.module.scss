@@ -5,12 +5,24 @@
   justify-content: center;
   margin-top: 100px; //80px nav mobile
 
-  .itemGridWrapper {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-    width: 90vw;
-    margin-left: 5vw;
+  .navbarWrapper {
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    left: 0;
+  }
+
+  .cartWrapper {
+    z-index: 100;
+    position: fixed;
+    height: 100%;
+    right: -5px;
+    top: 80px;
+    transition: 0.3s;
+  }
+
+  .cartShow {
+    right: max(70%, 250px);
   }
 }
 
@@ -24,18 +36,10 @@
   .container {
     width: 1080px;
     // margin-left: calc((100vw - 1080px) / 2);
-    .itemGridWrapper {
-      width: 1080px;
-      margin-left: calc((100vw - 1080px) / 2);
-    }
   }
 }
 
 @media screen and (min-width: 1440px) {
   .container {
-    .itemGridWrapper {
-      width: 1440px;
-      margin-left: calc((100vw - 1440px) / 2);
-    }
   }
 }

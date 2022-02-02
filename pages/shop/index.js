@@ -5,6 +5,7 @@ import styles from "../../styles/Shop.module.scss"
 import { useSelector, useDispatch } from "react-redux"
 import { setItems } from "../../redux/reducers/itemsSlice"
 import Cart from "../../components/Cart/Cart"
+import Layout from "../../components/Layout/Layout"
 
 export async function getStaticProps() {
   const res = await fetch("http://localhost:3000/api/items")
@@ -26,17 +27,11 @@ export default function Shop({ items }) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.navbarWrapper}>
-        <Navbar className={styles.navbar} />
-      </div>
-
-      <div className={styles.cartWrapper}>
-        <Cart />
-      </div>
-
-      <div className={styles.itemGridWrapper}>
-        <ItemGrid items={items} className={styles.itemGrid} />
-      </div>
+      <Layout>
+        <div className={styles.itemGridWrapper}>
+          <ItemGrid items={items} className={styles.itemGrid} />
+        </div>
+      </Layout>
     </div>
   )
 }

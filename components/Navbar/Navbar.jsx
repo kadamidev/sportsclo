@@ -5,10 +5,12 @@ import useDebounce from "../../utils/useDebounce"
 import Link from "next/link"
 import { signOut, useSession } from "next-auth/react"
 import { useRouter } from "next/router"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
+import { toggleCart, hideCart } from "../../redux/reducers/cartSlice"
 
-export default function Navbar() {
+export default function Navbar({ setShowCart }) {
   const items = useSelector((state) => state.items.value)
+  const dispatch = useDispatch()
 
   const { data: session } = useSession()
   const router = useRouter()
@@ -20,7 +22,7 @@ export default function Navbar() {
   const [filteredItems, setFilteredItems] = useState([])
   const [showSearchResults, setShowSearchResults] = useState(false)
   const [showAuthBtns, setShowAuthBtns] = useState(false)
-  const [showCart, setShowCart] = useState(false)
+  const [showCartBtn, setShowCartBtn] = useState(false)
   const [showSearchBar, setShowSearchBar] = useState(false)
 
   const resultsRef = useRef(null)
@@ -122,6 +124,7 @@ export default function Navbar() {
             onClick={() => {
               setShowSearchBar(!showSearchBar)
               setShowAuthBtns(false)
+              setShowCartBtn(false)
               setShowCart(false)
             }}
           >
@@ -175,6 +178,7 @@ export default function Navbar() {
               onClick={() => {
                 setShowAuthBtns(!showAuthBtns)
                 setShowSearchBar(false)
+                setShowCartBtn(false)
                 setShowCart(false)
               }}
             >
@@ -188,6 +192,7 @@ export default function Navbar() {
               onClick={() => {
                 setShowAuthBtns(!showAuthBtns)
                 setShowSearchBar(false)
+                setShowCartBtn(false)
                 setShowCart(false)
               }}
             >
@@ -201,15 +206,18 @@ export default function Navbar() {
           )}
 
           <div
-            className={showCart ? styles.closeCartIcon : styles.cartWrapper}
+            className={showCartBtn ? styles.closeCartIcon : styles.cartWrapper}
             onClick={() => {
-              setShowCart(!showCart)
+              setShowCartBtn(!showCartBtn)
               setShowAuthBtns(false)
               setShowSearchBar(false)
+              {
+                showCartBtn ? setShowCart(false) : setShowCart(true)
+              }
             }}
           >
             <Image
-              src={showCart ? "/close.svg" : "/cart.svg"}
+              src={showCartBtn ? "/close.svg" : "/cart.svg"}
               layout="responsive"
               width={35}
               height={35}
