@@ -22,19 +22,27 @@
   }
 
   .cartShow {
-    right: max(70%, 250px);
+    right: max(250px, min(70vw, 350px));
   }
 }
 
 @media screen and (min-width: 768px) {
   .container {
-    margin-top: min(120px, calc(10vw + 20px));
+    margin-top: 120px;
+
+    .cartWrapper {
+      top: 100px;
+    }
+
+    .cartShow {
+      right: min(70%, 350px);
+    }
   }
 }
 
 @media screen and (min-width: 1080px) {
   .container {
-    width: 1080px;
+    // width: 1080px;
     // margin-left: calc((100vw - 1080px) / 2);
   }
 }

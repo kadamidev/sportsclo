@@ -6,18 +6,63 @@ export default function Cart() {
   return (
     <div className={styles.cartContainer}>
       {/* add clear cart somewhere */}
-      <header className={styles.columnHeaders}>
+      {/* <header className={styles.columnHeaders}>
         <span>item</span>
         <span>quantity</span>
         <span>sum</span>
-      </header>
+      </header> */}
 
-      <section className={styles.contentsContainer}></section>
+      <section className={styles.contentsContainer}>
+        <header className={styles.columnHeaders}>
+          <span className={styles.item}>item</span>
+          <span className={styles.quantity}>qty</span>
+          <span className={styles.sum}>sum</span>
+        </header>
+
+        <ul className={styles.itemsList}>
+          <li>
+            <div className={styles.firstCol}>
+              <span className={styles.itemName}>Badminton Beginner Set</span>
+              <ul className={styles.optionsList}>
+                <li>Size M</li>
+                <li>Red</li>
+              </ul>
+            </div>
+
+            <div className={styles.quantityWrapper}>
+              <input
+                className={styles.quantityInput}
+                // value={quantity}
+                // onChange={handleQuantityChange}
+              />
+              <button
+                className={styles.quantityPlus}
+                // onClick={() => setQuantity(quantity + 1)}
+              >
+                +
+              </button>
+              <button
+                className={styles.quantityMinus}
+                // onClick={() => {
+                //   if (quantity === 1) return
+                //   setQuantity(quantity - 1)
+                // }}
+              >
+                -
+              </button>
+            </div>
+
+            <span className={styles.itemSum}>$0.00</span>
+            <button>x</button>
+          </li>
+        </ul>
+      </section>
 
       <section className={styles.bottomSection}>
         <div className={styles.couponWrapper}>
-          <span className={styles.lightHeading}>Coupon Code</span>
+          <span className={styles.lightHeading}>COUPON CODE</span>
           <input type="text" />
+          <button className={styles.addCouponBtn}>ADD</button>
         </div>
 
         <div className={styles.summationWrapper}>
@@ -26,10 +71,19 @@ export default function Cart() {
             <span className={styles.lightHeading}>$135.00</span>
           </div>
           <div className={styles.coupons}>
-            <span className={styles.lightHeading}>COUPONS</span>
-            <span className={styles.lightHeading}>-$20.25</span>
+            <div className={styles.couponsHeader}>
+              <span className={styles.lightHeading}>COUPONS</span>
+              <span className={styles.lightHeading}>-$20.25</span>
+            </div>
             <ul className={styles.couponsList}>
-              <li>coupon 1</li>
+              <li>
+                <span>coupon 1</span>
+                <button>x</button>
+              </li>
+              <li>
+                <span>coupon 2</span>
+                <button>x</button>
+              </li>
             </ul>
           </div>
           <div className={styles.delivery}>

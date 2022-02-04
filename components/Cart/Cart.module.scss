@@ -4,15 +4,277 @@
   // padding-top: 85px;
   padding: 5px 10px 0px;
   min-width: 250px;
-  height: 100%;
+  max-width: 350px;
+  height: calc(100vh - 80px);
   position: fixed;
   box-shadow: -4px 3px 4px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
-  .columnHeaders {
-    display: flex;
-    justify-content: space-between;
-    font-weight: bold;
-    font-size: 0.9em;
-    color: var(--main-grey);
+  .contentsContainer {
+    --quantity-width: 60px;
+    --sum-width: 70px;
+    --item-width: calc(100% - var(--quantity-width) - var(--sum-width));
+
+    .columnHeaders {
+      font-weight: bold;
+      font-size: 0.8em;
+      color: var(--main-grey);
+      display: grid;
+      grid-template-columns: var(--item-width) var(--quantity-width) var(
+          --sum-width
+        );
+      grid-template-areas: "item quantity sum";
+      margin-bottom: 0.5em;
+      grid-gap: 5px;
+
+      span {
+        display: block;
+      }
+      .item {
+        grid-area: item;
+      }
+      .quantity {
+        grid-area: quantity;
+      }
+      .sum {
+        grid-area: sum;
+      }
+    }
+
+    .itemsList {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      margin: 0 -10px;
+      padding: 5px 10px;
+      li {
+        display: grid;
+        grid-template-columns: var(--item-width) var(--quantity-width) var(
+            --sum-width
+          );
+        grid-template-areas: "item quantity sum";
+        color: var(--main-grey);
+        font-size: 0.9em;
+        // align-items: center;
+        grid-gap: 5px;
+
+        .firstCol {
+          grid-area: item;
+          .itemName {
+            // display: inline;
+            margin-right: 0.5em;
+          }
+          .optionsList {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: inline-flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            li {
+              border: 1px solid #777;
+              color: #777;
+              font-size: 0.7em;
+              padding: 0 0.1em;
+              line-height: 1.3em;
+              height: fit-content;
+              width: fit-content;
+              display: inline;
+            }
+          }
+        }
+
+        .quantityWrapper {
+          grid-area: quantity;
+          position: relative;
+          width: 50px;
+          height: 25px;
+          margin-bottom: 12px;
+          .quantityInput {
+            width: 50px;
+            height: 25px;
+            font-family: "poppins";
+            border: 1px solid #404040;
+            color: #404040;
+            margin-right: 5px;
+            font-size: 1em;
+            padding-left: 5px;
+            -webkit-appearance: none;
+            -moz-appearance: textfield;
+            padding-right: 18px;
+
+            &:focus {
+              outline: none !important;
+            }
+          }
+
+          button {
+            background: none;
+            height: 12px;
+            width: 17.5px;
+            position: absolute;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+            border-left: 1px solid #404040;
+            right: 1px;
+            color: #404040;
+
+            &.quantityPlus {
+              top: 1px;
+              border-bottom: 0.5px solid #404040;
+            }
+            &.quantityMinus {
+              border-top: 0.5px solid #404040;
+              bottom: 1px;
+            }
+
+            &:hover {
+              background: var(--primary-purple);
+              color: white;
+            }
+          }
+        }
+
+        .itemSum {
+          grid-area: sum;
+        }
+
+        button {
+          // grid-area: sum;
+          position: absolute;
+          right: 10px;
+          background: none;
+          border: none;
+          color: #40404077;
+          cursor: pointer;
+        }
+      }
+      &:hover {
+        background: #f4eafa;
+      }
+    }
+  }
+
+  .bottomSection {
+    margin-bottom: 10px;
+
+    .lightHeading {
+      font-size: 1.3em;
+      color: var(--main-grey);
+    }
+
+    .couponWrapper {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      span {
+      }
+
+      input {
+        width: calc(100% - 80px);
+        height: 35px;
+        background: #f0f0f0;
+        border: none;
+        color: var(--main-grey);
+        padding: 0 1em;
+      }
+
+      button {
+        position: absolute;
+        width: 75px;
+        height: 35px;
+        background: #fff;
+        border: 2px solid var(--main-grey);
+        font-weight: bold;
+        color: var(--main-grey);
+        bottom: 0;
+        right: 0;
+        cursor: pointer;
+        font-size: 1.3em;
+
+        &:hover {
+          background: var(--main-grey);
+          border: 2px solid var(--main-grey);
+          color: white;
+        }
+      }
+    }
+
+    .subTotal {
+      display: flex;
+      justify-content: space-between;
+    }
+    .coupons {
+      .couponsHeader {
+        display: flex;
+        justify-content: space-between;
+        // line-height: 0.8em;
+        // line-height: 10px;
+      }
+
+      ul.couponsList {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        margin-top: -6px;
+        li {
+          line-height: 1em;
+
+          margin: 0;
+          padding: 0;
+          span {
+            font-size: 0.75em;
+            color: var(--main-grey);
+          }
+
+          button {
+            background: none;
+            border: none;
+            color: #40404060;
+            font-size: 0.8em;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    .delivery {
+      display: flex;
+      justify-content: space-between;
+    }
+    .total {
+      display: flex;
+      justify-content: space-between;
+      h2 {
+        margin: 0;
+      }
+    }
+    .checkOutBtn {
+      background: var(--primary-purple);
+      border: none;
+      font-weight: bold;
+      font-size: 2em;
+      color: white;
+      padding: 0.1em 0;
+      width: 100%;
+      border: 2px solid var(--primary-purple);
+      letter-spacing: 0.1em;
+
+      &:hover {
+        color: var(--primary-purple);
+        background: white;
+        border: 2px solid var(--primary-purple);
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .cartContainer {
+    height: calc(100vh - 100px);
   }
 }

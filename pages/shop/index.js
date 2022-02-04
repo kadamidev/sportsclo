@@ -1,10 +1,8 @@
 import React, { useEffect } from "react"
 import ItemGrid from "../../components/ItemGrid/ItemGrid"
-import Navbar from "../../components/Navbar/Navbar"
 import styles from "../../styles/Shop.module.scss"
 import { useSelector, useDispatch } from "react-redux"
 import { setItems } from "../../redux/reducers/itemsSlice"
-import Cart from "../../components/Cart/Cart"
 import Layout from "../../components/Layout/Layout"
 
 export async function getStaticProps() {
