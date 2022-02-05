@@ -191,7 +191,7 @@ export default function Item({ item }) {
 
           <div className={styles.recommendedContainer}>
             <h1>RECOMMENDED</h1>
-            <RecommendedGrid item={item} />
+            <RecommendedGrid item={item} setQuantity={setQuantity} />
           </div>
         </section>
       </div>
