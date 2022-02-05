@@ -1,16 +1,18 @@
 import React, { useState } from "react"
 import styles from "./Cart.module.scss"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
+import {
+  updateItemQuantity,
+  deleteFromCart,
+} from "../../redux/reducers/cartSlice"
 
 export default function Cart() {
+  const cartItems = useSelector((state) => state.cart.cart)
+  const dispatch = useDispatch()
+
   return (
     <div className={styles.cartContainer}>
       {/* add clear cart somewhere */}
-      {/* <header className={styles.columnHeaders}>
-        <span>item</span>
-        <span>quantity</span>
-        <span>sum</span>
-      </header> */}
 
       <section className={styles.contentsContainer}>
         <header className={styles.columnHeaders}>
@@ -20,41 +22,72 @@ export default function Cart() {
         </header>
 
         <ul className={styles.itemsList}>
-          <li>
-            <div className={styles.firstCol}>
-              <span className={styles.itemName}>Badminton Beginner Set</span>
-              <ul className={styles.optionsList}>
-                <li>Size M</li>
-                <li>Red</li>
-              </ul>
-            </div>
+          {cartItems.map((item, idx) => {
+            return (
+              <li key={idx}>
+                <div className={styles.firstCol}>
+                  <span className={styles.itemName}>{item.item.name}</span>
+                  <ul className={styles.optionsList}>
+                    {item.item.options.map((option, idx) => {
+                      const key = Object.keys(option)[0]
+                      const selected =
+                        Object.values(option)[0][item.selectedOptions[key]]
+                      return <li key={idx}>{selected}</li>
+                    })}
+                  </ul>
+                </div>
 
-            <div className={styles.quantityWrapper}>
-              <input
-                className={styles.quantityInput}
-                // value={quantity}
-                // onChange={handleQuantityChange}
-              />
-              <button
-                className={styles.quantityPlus}
-                // onClick={() => setQuantity(quantity + 1)}
-              >
-                +
-              </button>
-              <button
-                className={styles.quantityMinus}
-                // onClick={() => {
-                //   if (quantity === 1) return
-                //   setQuantity(quantity - 1)
-                // }}
-              >
-                -
-              </button>
-            </div>
+                <div className={styles.quantityWrapper}>
+                  <input
+                    className={styles.quantityInput}
+                    value={item.quantity}
+                    onBlur={(e) => {
+                      if (item.quantity < 1) {
+                        dispatch(updateItemQuantity({ idx: idx, value: 1 }))
+                      }
+                    }}
+                    onChange={(e) => {
+                      dispatch(
+                        updateItemQuantity({ idx: idx, value: e.target.value })
+                      )
+                    }}
+                  />
+                  <button
+                    className={styles.quantityPlus}
+                    onClick={() =>
+                      dispatch(
+                        updateItemQuantity({
+                          idx: idx,
+                          value: item.quantity + 1,
+                        })
+                      )
+                    }
+                  >
+                    +
+                  </button>
+                  <button
+                    className={styles.quantityMinus}
+                    onClick={() => {
+                      if (item.quantity === 1) return
+                      dispatch(
+                        updateItemQuantity({
+                          idx: idx,
+                          value: item.quantity - 1,
+                        })
+                      )
+                    }}
+                  >
+                    -
+                  </button>
+                </div>
 
-            <span className={styles.itemSum}>$0.00</span>
-            <button>x</button>
-          </li>
+                <span className={styles.itemSum}>
+                  &#36;{item.item.price * item.quantity}.00
+                </span>
+                <button onClick={() => dispatch(deleteFromCart(idx))}>x</button>
+              </li>
+            )
+          })}
         </ul>
       </section>
 

@@ -4,6 +4,11 @@ import Image from "next/image"
 import RecommendedGrid from "../../components/RecommendedGrid/RecommendedGrid"
 import { useRouter } from "next/router"
 import Layout from "../../components/Layout/Layout"
+import { useDispatch } from "react-redux"
+import {
+  addItemToCart,
+  removeItemFromCart,
+} from "../../redux/reducers/cartSlice"
 
 export const getStaticPaths = async () => {
   const res = await fetch("http://localhost:3000/api/items/")
@@ -34,6 +39,7 @@ export default function Item({ item }) {
   const [activeOptions, setActiveOptions] = useState({})
   const [quantity, setQuantity] = useState(1)
   const router = useRouter()
+  const dispatch = useDispatch()
 
   //set initial active options
   useEffect(() => {
@@ -51,13 +57,34 @@ export default function Item({ item }) {
     setActiveOptions(changedOptions)
   }
 
-  useEffect(() => {
-    if (quantity < 1 || isNaN(quantity)) setQuantity(1)
-  }, [quantity, setQuantity])
+  const handleQuantityChange = (val) => {
+    if (val.length === 0) {
+      setQuantity("")
+    } else if (val < 1 || isNaN(val)) {
+      setQuantity(1)
+    } else {
+      setQuantity(parseInt(val))
+    }
+  }
 
-  const handleQuantityChange = (e) => {
-    if (isNaN(e.target.value)) return
-    setQuantity(parseInt(e.target.value))
+  function handleAddToCart() {
+    const newItem = {
+      item: item,
+      selectedOptions: activeOptions,
+      quantity: quantity,
+    }
+    console.log(newItem)
+    dispatch(addItemToCart(newItem))
+  }
+
+  function handleRemoveFromCart() {
+    const newItem = {
+      item: item,
+      selectedOptions: activeOptions,
+      quantity: quantity,
+    }
+    console.log(newItem)
+    dispatch(removeItemFromCart(newItem))
   }
 
   return (
@@ -127,7 +154,12 @@ export default function Item({ item }) {
                     <input
                       className={styles.quantityInput}
                       value={quantity}
-                      onChange={handleQuantityChange}
+                      onBlur={() => {
+                        if (quantity < 1) {
+                          handleQuantityChange(1)
+                        }
+                      }}
+                      onChange={(e) => handleQuantityChange(e.target.value)}
                     />
                     <button
                       className={styles.quantityPlus}
@@ -148,8 +180,10 @@ export default function Item({ item }) {
                 </div>
 
                 <div className={styles.buttonsContainer}>
-                  <button>ADD TO CART</button>
-                  <button>REMOVE FROM CART</button>
+                  <button onClick={handleAddToCart}>ADD TO CART</button>
+                  <button onClick={handleRemoveFromCart}>
+                    REMOVE FROM CART
+                  </button>
                 </div>
               </div>
             </div>
