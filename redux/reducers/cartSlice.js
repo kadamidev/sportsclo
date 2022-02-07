@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
   cart: [],
+  activeCoupons: [],
 }
 
 export const cartSlice = createSlice({
@@ -58,6 +59,16 @@ export const cartSlice = createSlice({
     deleteFromCart: (state, action) => {
       state.cart.splice(action.payload, 1)
     },
+    setCoupons: (state, action) => {
+      state.coupons = action.payload
+    },
+    addCoupon: (state, action) => {
+      //checkf or collision
+      state.activeCoupons.push(action.payload)
+    },
+    removeCoupon: (state, action) => {
+      state.activeCoupons.splice(action.payload, 1)
+    },
   },
 })
 
@@ -68,6 +79,8 @@ export const {
   removeItemFromCart,
   updateItemQuantity,
   deleteFromCart,
+  addCoupon,
+  removeCoupon,
 } = cartSlice.actions
 
 export default cartSlice.reducer

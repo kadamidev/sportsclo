@@ -10,6 +10,20 @@ export default function Cart() {
   const cartItems = useSelector((state) => state.cart.cart)
   const dispatch = useDispatch()
 
+  const [couponCode, setCouponCode] = useState("")
+  const [couponMsg, setCouponMsg] = useState("")
+
+  async function handleAddCoupon() {
+    const res = await fetch(`/api/coupons/${couponCode}`)
+    if (res.ok) {
+      const coupon = await res.json()
+      setCouponMsg("Coupon applied")
+    } else {
+      setCouponMsg("Invalid coupon")
+    }
+    setCouponCode("")
+  }
+
   return (
     <div className={styles.cartContainer}>
       {/* add clear cart somewhere */}
@@ -94,14 +108,30 @@ export default function Cart() {
       <section className={styles.bottomSection}>
         <div className={styles.couponWrapper}>
           <span className={styles.lightHeading}>COUPON CODE</span>
-          <input type="text" />
-          <button className={styles.addCouponBtn}>ADD</button>
+          <input
+            type="text"
+            value={couponCode}
+            placeholder={couponMsg}
+            onChange={(e) => {
+              if (couponMsg) setCouponMsg("")
+              setCouponCode(e.target.value)
+            }}
+          />
+          <button className={styles.addCouponBtn} onClick={handleAddCoupon}>
+            ADD
+          </button>
         </div>
 
         <div className={styles.summationWrapper}>
           <div className={styles.subTotal}>
             <span className={styles.lightHeading}>SUBTOTAL</span>
-            <span className={styles.lightHeading}>$135.00</span>
+            <span className={styles.lightHeading}>
+              &#36;
+              {cartItems.reduce((acc, item) => {
+                return acc + item.item.price * item.quantity
+              }, 0)}
+              .00
+            </span>
           </div>
           <div className={styles.coupons}>
             <div className={styles.couponsHeader}>
@@ -126,7 +156,14 @@ export default function Cart() {
 
           <div className={styles.total}>
             <h2>TOTAL</h2>
-            <h2>$114.75</h2>
+            <h2>
+              {" "}
+              &#36;
+              {cartItems.reduce((acc, item) => {
+                return acc + item.item.price * item.quantity
+              }, 0)}
+              .00
+            </h2>
           </div>
         </div>
 

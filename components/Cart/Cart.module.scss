@@ -14,7 +14,7 @@
 
   .contentsContainer {
     --quantity-width: 60px;
-    --sum-width: 70px;
+    --sum-width: 80px;
     --item-width: calc(100% - var(--quantity-width) - var(--sum-width));
 
     .columnHeaders {
@@ -148,7 +148,7 @@
         button {
           // grid-area: sum;
           position: absolute;
-          right: 10px;
+          right: 8px;
           background: none;
           border: none;
           color: #40404077;
