@@ -7,9 +7,11 @@ import dbConnect from "../../../utils/dbConnect"
 
 const coupons = {
   xmas: {
+    code: "xmas",
     discount_val: 0.15,
     discount_type: "percent",
     items: { all: true },
+    description: `'xmas' -15% storewide`,
   },
 }
 

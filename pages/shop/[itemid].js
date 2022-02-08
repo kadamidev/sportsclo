@@ -73,7 +73,6 @@ export default function Item({ item }) {
       selectedOptions: activeOptions,
       quantity: quantity,
     }
-    console.log(newItem)
     dispatch(addItemToCart(newItem))
   }
 
@@ -83,7 +82,6 @@ export default function Item({ item }) {
       selectedOptions: activeOptions,
       quantity: quantity,
     }
-    console.log(newItem)
     dispatch(removeItemFromCart(newItem))
   }
 

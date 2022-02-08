@@ -1,8 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, current } from "@reduxjs/toolkit"
 
 const initialState = {
   cart: [],
   activeCoupons: [],
+  couponDiscount: 0,
+  subTotal: 0,
 }
 
 export const cartSlice = createSlice({
@@ -63,11 +65,44 @@ export const cartSlice = createSlice({
       state.coupons = action.payload
     },
     addCoupon: (state, action) => {
-      //checkf or collision
-      state.activeCoupons.push(action.payload)
+      const collision = state.activeCoupons.find(
+        (coupon) => coupon.code === action.payload.coupon.code
+      )
+      if (collision) return
+      state.activeCoupons.push(action.payload.coupon)
     },
     removeCoupon: (state, action) => {
       state.activeCoupons.splice(action.payload, 1)
+    },
+    calculateCouponDiscount: (state) => {
+      let couponDiscount = 0
+      state.activeCoupons.forEach((coupon) => {
+        let itemTotal = 0
+
+        //calculate item total per coupon
+        if (coupon.items.hasOwnProperty("all")) {
+          itemTotal += state.cart.reduce((acc, item) => {
+            return acc + parseFloat(item.item.price) * item.quantity
+          }, 0)
+        } else {
+          itemTotal += state.cart.reduce((acc, item) => {
+            if (coupon.items.hasOwnProperty(item.item._id))
+              return acc + parseFloat(item.item.price) * item.quantity
+            return acc
+          })
+        }
+
+        //calculate discount amt
+        if (coupon.discount_type === "percent") {
+          couponDiscount += itemTotal * coupon.discount_val
+        }
+      })
+      state.couponDiscount = couponDiscount
+    },
+    calculateSubTotal: (state) => {
+      state.subTotal = state.cart.reduce((acc, item) => {
+        return acc + item.item.price * item.quantity
+      }, 0)
     },
   },
 })
@@ -81,6 +116,8 @@ export const {
   deleteFromCart,
   addCoupon,
   removeCoupon,
+  calculateCouponDiscount,
+  calculateSubTotal,
 } = cartSlice.actions
 
 export default cartSlice.reducer

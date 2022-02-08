@@ -1,13 +1,23 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import styles from "./Cart.module.scss"
 import { useSelector, useDispatch } from "react-redux"
 import {
   updateItemQuantity,
   deleteFromCart,
+  addCoupon,
+  removeCoupon,
+  calculateCouponDiscount,
+  calculateSubTotal,
 } from "../../redux/reducers/cartSlice"
+
+import { formatAmount } from "../../utils/formatAmount"
 
 export default function Cart() {
   const cartItems = useSelector((state) => state.cart.cart)
+  const activeCoupons = useSelector((state) => state.cart.activeCoupons)
+  const couponDiscount = useSelector((state) => state.cart.couponDiscount)
+  const subTotal = useSelector((state) => state.cart.subTotal)
+
   const dispatch = useDispatch()
 
   const [couponCode, setCouponCode] = useState("")
@@ -17,12 +27,18 @@ export default function Cart() {
     const res = await fetch(`/api/coupons/${couponCode}`)
     if (res.ok) {
       const coupon = await res.json()
+      dispatch(addCoupon(coupon))
       setCouponMsg("Coupon applied")
     } else {
       setCouponMsg("Invalid coupon")
     }
     setCouponCode("")
   }
+
+  useEffect(() => {
+    dispatch(calculateSubTotal())
+    dispatch(calculateCouponDiscount())
+  }, [cartItems, activeCoupons])
 
   return (
     <div className={styles.cartContainer}>
@@ -126,27 +142,31 @@ export default function Cart() {
           <div className={styles.subTotal}>
             <span className={styles.lightHeading}>SUBTOTAL</span>
             <span className={styles.lightHeading}>
-              &#36;
-              {cartItems.reduce((acc, item) => {
-                return acc + item.item.price * item.quantity
-              }, 0)}
-              .00
+              {formatAmount(subTotal)}
             </span>
           </div>
           <div className={styles.coupons}>
             <div className={styles.couponsHeader}>
               <span className={styles.lightHeading}>COUPONS</span>
-              <span className={styles.lightHeading}>-$20.25</span>
+              <span className={styles.lightHeading}>
+                -{formatAmount(couponDiscount)}
+              </span>
             </div>
             <ul className={styles.couponsList}>
-              <li>
-                <span>coupon 1</span>
-                <button>x</button>
-              </li>
-              <li>
-                <span>coupon 2</span>
-                <button>x</button>
-              </li>
+              {activeCoupons.map((coupon, idx) => {
+                return (
+                  <li key={idx}>
+                    <span>{coupon.description}</span>
+                    <button
+                      onClick={() => {
+                        dispatch(removeCoupon(idx))
+                      }}
+                    >
+                      x
+                    </button>
+                  </li>
+                )
+              })}
             </ul>
           </div>
           <div className={styles.delivery}>
@@ -156,14 +176,7 @@ export default function Cart() {
 
           <div className={styles.total}>
             <h2>TOTAL</h2>
-            <h2>
-              {" "}
-              &#36;
-              {cartItems.reduce((acc, item) => {
-                return acc + item.item.price * item.quantity
-              }, 0)}
-              .00
-            </h2>
+            <h2>{formatAmount(subTotal - couponDiscount)}</h2>
           </div>
         </div>
 
