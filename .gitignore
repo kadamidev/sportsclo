@@ -37,3 +37,5 @@ yarn-error.log*
 
 /utils/seed.js
 /utils/data.js
+
+/pages/reduxsample.js
