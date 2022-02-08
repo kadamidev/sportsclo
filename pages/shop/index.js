@@ -4,10 +4,13 @@ import styles from "../../styles/Shop.module.scss"
 import { useSelector, useDispatch } from "react-redux"
 import { setItems } from "../../redux/reducers/itemsSlice"
 import Layout from "../../components/Layout/Layout"
+import dbConnect from "../../utils/dbConnect"
+import Item from "../../models/Item"
 
 export async function getStaticProps() {
-  const res = await fetch("http://localhost:3000/api/items")
-  const items = await res.json()
+  await dbConnect()
+  const query = await Item.find({})
+  const items = JSON.parse(JSON.stringify(query))
 
   return {
     props: {

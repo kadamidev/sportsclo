@@ -9,10 +9,14 @@ import {
   addItemToCart,
   removeItemFromCart,
 } from "../../redux/reducers/cartSlice"
+import dbConnect from "../../utils/dbConnect"
+import Item from "../../models/Item"
 
 export const getStaticPaths = async () => {
-  const res = await fetch("http://localhost:3000/api/items/")
-  const items = await res.json()
+  await dbConnect()
+  const query = await Item.find({})
+  const items = JSON.parse(JSON.stringify(query))
+
   const paths = items.map((item) => {
     return {
       params: { itemid: item._id.toString() },
@@ -26,9 +30,9 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps = async (context) => {
-  const itemid = context.params.itemid
-  const res = await fetch(`http://localhost:3000/api/items/${itemid}`)
-  const item = await res.json()
+  await dbConnect()
+  const query = await Item.findById(itemid)
+  const item = JSON.parse(JSON.stringify(query))
 
   return {
     props: { item: item },
