@@ -10,7 +10,6 @@ import { toggleCart, hideCart } from "../../redux/reducers/cartSlice"
 
 export default function Navbar({ setShowCart }) {
   const items = useSelector((state) => state.items.value)
-  const dispatch = useDispatch()
 
   const { data: session } = useSession()
   const router = useRouter()
@@ -102,7 +101,7 @@ export default function Navbar({ setShowCart }) {
                 {filteredItems.map((item, idx) => (
                   <li
                     onClick={() => {
-                      console.log(item.name)
+                      router.push(`/shop/${item._id}`)
                       setShowSearchResults(false)
                       setSearchQuery("")
                     }}
