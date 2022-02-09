@@ -10,11 +10,11 @@ import {
   removeItemFromCart,
 } from "../../redux/reducers/cartSlice"
 import dbConnect from "../../utils/dbConnect"
-import Item from "../../models/Item"
+import ItemModel from "../../models/Item"
 
 export const getStaticPaths = async () => {
   await dbConnect()
-  const query = await Item.find({})
+  const query = await ItemModel.find({})
   const items = JSON.parse(JSON.stringify(query))
 
   const paths = items.map((item) => {
@@ -31,7 +31,8 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context) => {
   await dbConnect()
-  const query = await Item.findById(itemid)
+  const itemid = context.params.itemid
+  const query = await ItemModel.findById(itemid)
   const item = JSON.parse(JSON.stringify(query))
 
   return {
