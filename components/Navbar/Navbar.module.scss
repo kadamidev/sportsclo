@@ -165,7 +165,6 @@
   .closeCartIcon {
     display: inline-block;
     width: 30px;
-    // display: flex;
     align-self: flex-end;
     margin: 0px 17.5px;
 
@@ -318,10 +317,24 @@
     }
 
     .right {
-      margin-right: 0;
-
       .cartWrapper {
-        margin-right: 0;
+        margin-right: 0px;
+        margin-left: 15px;
+
+        &:hover {
+          margin-right: 0px;
+          margin-left: 10px;
+        }
+      }
+
+      .closeCartIcon {
+        margin-right: 0px;
+        margin-left: 20px;
+
+        &:hover {
+          margin-right: 0px;
+          margin-left: 15px;
+        }
       }
     }
   }
