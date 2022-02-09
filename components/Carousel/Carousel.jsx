@@ -88,6 +88,7 @@ function Carousel({ slides }) {
                   layout="fill"
                   alt="Sky"
                   className={styles.image}
+                  priority={true}
                 />
               )}
             </div>
