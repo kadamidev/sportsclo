@@ -13,9 +13,7 @@ export default function Navbar({ setShowCart }) {
 
   const { data: session } = useSession()
   const router = useRouter()
-  if (session) {
-    console.log(session.user)
-  }
+
   const [searchQuery, setSearchQuery] = useState("")
   const debouncedSearchQuery = useDebounce(searchQuery, 250)
   const [filteredItems, setFilteredItems] = useState([])
